@@ -1,0 +1,17 @@
+.comic-thumbnail {
+    height: 250px;
+    object-fit: cover;
+}
+
+.comic-card {
+    height: 100%;
+}
+
+.favorite-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.favorite-icon.favorited {
+    color: red;
+}

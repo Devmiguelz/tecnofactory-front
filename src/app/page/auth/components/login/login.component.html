@@ -1,0 +1,26 @@
+<div class="login-container">
+    <h2 class="text-center mb-4">Iniciar Sesión</h2>
+
+    <form [formGroup]="loginForm" class="needs-validation" novalidate>        
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input id="email" type="email" class="form-control" formControlName="email" placeholder="Ingresa tu email" required />
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid-feedback">
+                El correo es requerido y debe ser válido.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input id="password" type="password" class="form-control" formControlName="password" placeholder="Ingresa tu contraseña" required/>
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid-feedback">
+                La contraseña es obligatoria.
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <p-button label="New Register" severity="info" (onClick)="redirectRegister()" />
+            <p-button label="Login" icon="pi pi-check" [loading]="loading" (onClick)="login()" />
+        </div>
+    </form>
+</div>
