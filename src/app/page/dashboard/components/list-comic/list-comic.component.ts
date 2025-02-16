@@ -1,6 +1,5 @@
 import { Component, inject, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComicService } from '../../service/comic-all.service';
 import { ListComic } from '../../model/comic.model';
 import { ComicUserService } from '../../service/comic-user.service';
 import { ComicComponent } from './components/comic/comic.component';
@@ -15,10 +14,10 @@ import { DetailComicComponent } from './components/detail-comic/detail-comic.com
 export class ListComicComponent {
     @Input() comics: ListComic[] = [];
     @Input() loading: boolean = true;
+    @Input() delete: boolean = false;
 
     @ViewChild('detailComponent') detailComponent!: DetailComicComponent;
 
-    private comicService = inject(ComicService);
     private comicUserService = inject(ComicUserService);
 
     selectedComic: ListComic | null = null;
@@ -33,7 +32,10 @@ export class ListComicComponent {
 
     toggleFavorite(comicId: number) {     
         this.comicUserService.toggleFavoriteComic(comicId).subscribe((response) => {
-            console.log(response.data);            
+            console.log(response.data);     
+            if(this.delete) {
+                this.comics = this.comics.filter(comic => comic.id !== comicId);
+            }       
         });
     }
 
