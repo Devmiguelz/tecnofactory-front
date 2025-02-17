@@ -1,11 +1,11 @@
 <div class="register-container">
     <h2>Registro de Usuario</h2>
   
-    <form [formGroup]="registerForm" class="needs-validation" novalidate>
+    <form [formGroup]="registerForm" class="needs-validation">
         
         <div class="mb-3">
-            <label for="name" class="form-label">Nombre</label>
-            <input id="name" type="text" class="form-control" formControlName="name" placeholder="Ingresa tu nombre" required />
+            <label for="name" class="form-label">Nombre completo</label>
+            <input id="name" type="text" class="form-control" formControlName="name" placeholder="Ingresa tu nombre" autocomplete="off" required />
             <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="invalid-feedback">
                 El nombre es requerido.
             </div>
@@ -13,7 +13,7 @@
     
         <div class="mb-3">
             <label for="identification" class="form-label">Identificación</label>
-            <input id="identification" type="text" class="form-control" formControlName="identification" placeholder="Número de identificación" required />
+            <input id="identification" type="text" class="form-control" formControlName="identification" placeholder="Número de identificación" autocomplete="off" required />
             <div *ngIf="registerForm.get('identification')?.invalid && registerForm.get('identification')?.touched" class="invalid-feedback">
                 La identificación es obligatoria.
             </div>
@@ -21,7 +21,7 @@
     
         <div class="mb-3">
             <label for="email" class="form-label">Correo Electrónico</label>
-            <input id="email" type="email" class="form-control" formControlName="email" placeholder="Correo electrónico" required />
+            <input id="email" type="email" class="form-control" formControlName="email" placeholder="Correo electrónico" autocomplete="off" required />
             <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="invalid-feedback">
                 Ingresa un correo válido.
             </div>
@@ -29,7 +29,7 @@
     
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
-            <input id="password" type="password" class="form-control" formControlName="password" placeholder="Contraseña" required />
+            <input id="password" type="password" class="form-control" formControlName="password" placeholder="Contraseña" autocomplete="new-password" required />
             <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="invalid-feedback">
                 La contraseña es obligatoria.
             </div>
@@ -41,15 +41,14 @@
             <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="invalid-feedback">
                 Debes confirmar la contraseña.
             </div>
-            <div *ngIf="registerForm.hasError('passwordMismatch')" class="invalid-feedback">
+            <div *ngIf="registerForm.hasError('passwordsMatchValidator')" class="invalid-feedback">
                 Las contraseñas no coinciden.
             </div>
         </div>
     
         <div class="d-flex justify-content-between">
             <p-button label="Cancel" severity="danger" (onClick)="redirectLogin()" />
-            <p-button label="Register" icon="pi pi-check" [loading]="loading" severity="success" (onClick)="register()" />
+            <p-button label="Register" icon="pi pi-check" [loading]="loading" severity="success" [disabled]="!this.registerForm.valid" (onClick)="register()" />
         </div>
     </form>    
   </div>
-  <p-toast position="bottom-right" key="br" />

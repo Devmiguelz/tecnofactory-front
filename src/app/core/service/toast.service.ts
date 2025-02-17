@@ -1,30 +1,29 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root' // Disponible en toda la app
 })
 export class ToastService {
+    constructor(private messageService: MessageService) { }
 
-    private messageService = inject(MessageService);
-
-    showSuccess(summary: string, detail: string, life: number = 3000) {
-        this.messageService.add({ severity: 'success', summary, detail, key: 'br', life });
+    success(summary: string, detail: string, life: number = 3000): void {
+        this.messageService.add({ severity: 'success', summary, detail, life });
     }
 
-    showWarn(summary: string, detail: string, life: number = 3000) {
-        this.messageService.add({ severity: 'warn', summary, detail, key: 'br', life });
+    info(summary: string, detail: string, life: number = 3000): void {
+        this.messageService.add({ severity: 'info', summary, detail, life });
     }
 
-    showError(summary: string, detail: string, life: number = 3000) {
-        this.messageService.add({ severity: 'error', summary, detail, key: 'br', life });
+    warn(summary: string, detail: string, life: number = 3000): void {
+        this.messageService.add({ severity: 'warn', summary, detail, life });
     }
 
-    showInfo(summary: string, detail: string, life: number = 3000) {
-        this.messageService.add({ severity: 'info', summary, detail, key: 'br', life });
+    error(summary: string, detail: string, life: number = 3000): void {
+        this.messageService.add({ severity: 'error', summary, detail, life });
     }
 
-    clear() {
+    clear(): void {
         this.messageService.clear();
     }
 }

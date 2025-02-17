@@ -5,6 +5,7 @@ import { SessionService } from '../../../../core/service/session.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../../core/service/toast.service';
 
 @Component({
     selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
     private fb = inject(FormBuilder);
     private authService = inject(AuthService);
     private sessionService = inject(SessionService);
+    private toastService = inject(ToastService);
     private router = inject(Router);
 
     loading: boolean = false;
@@ -35,7 +37,9 @@ export class LoginComponent {
                 this.router.navigate(['/dashboard']);               
             }, error => {
                 setTimeout(() => {
-                    this.loading = false;                    
+                    console.log(error);
+                    this.loading = false;
+                    this.toastService.warn('Error', error.error.failures.toString());
                 }, 1500);
             });
         }

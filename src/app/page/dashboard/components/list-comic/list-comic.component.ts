@@ -4,6 +4,7 @@ import { ListComic } from '../../model/comic.model';
 import { ComicUserService } from '../../service/comic-user.service';
 import { ComicComponent } from './components/comic/comic.component';
 import { DetailComicComponent } from './components/detail-comic/detail-comic.component';
+import { ToastService } from '../../../../core/service/toast.service';
 
 @Component({
   selector: 'app-list-comic',
@@ -19,6 +20,8 @@ export class ListComicComponent {
     @ViewChild('detailComponent') detailComponent!: DetailComicComponent;
 
     private comicUserService = inject(ComicUserService);
+    private toastService = inject(ToastService);
+
 
     selectedComic: ListComic | null = null;
     skeletonArray = Array(15).fill(0); 
@@ -31,8 +34,12 @@ export class ListComicComponent {
     }
 
     toggleFavorite(comicId: number) {     
-        this.comicUserService.toggleFavoriteComic(comicId).subscribe((response) => {
-            console.log(response.data);     
+        this.comicUserService.toggleFavoriteComic(comicId).subscribe((response) => {   
+            if(response.data.includes('deleted')) {
+                this.toastService.info('Success', response.data, 1000);    
+            }else {
+                this.toastService.success('Success', response.data, 1000);    
+            }            
             if(this.delete) {
                 this.comics = this.comics.filter(comic => comic.id !== comicId);
             }       
