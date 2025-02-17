@@ -39,7 +39,7 @@ export class LoginComponent {
                 setTimeout(() => {
                     console.log(error);
                     this.loading = false;
-                    this.toastService.warn('Error', error.error.failures.toString());
+                    this.toastService.warn('Error', error.error.message);
                 }, 1500);
             });
         }
